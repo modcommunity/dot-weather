@@ -1,0 +1,23 @@
+# Godot 4
+.godot/
+/android/
+
+# Sibling repositories. For local development, symlink them:
+#   ln -s ../../dot-core/addons/dot_core addons/dot_core
+#   ln -s ../../dot-fx/addons/dot_fx addons/dot_fx                   (optional: drawing precipitation)
+#   ln -s ../../dot-lighting/addons/dot_lighting addons/dot_lighting (optional: fog)
+# Consumers copy the addons they want into their own project.
+/addons/dot_core
+/addons/dot_fx
+/addons/dot_lighting
+
+# Exports
+build/
+export_presets.cfg
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/

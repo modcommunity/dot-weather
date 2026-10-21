@@ -1,0 +1,25 @@
+; Engine configuration file.
+
+config_version=5
+
+[application]
+
+config/name="dot-weather"
+config/description="Everyday weather as a per-map document: precipitation, fog, wind and thunderstorms, with lightning that agrees on every client without a packet."
+run/main_scene="res://examples/weather_selftest.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/dot_weather/plugin.cfg")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
