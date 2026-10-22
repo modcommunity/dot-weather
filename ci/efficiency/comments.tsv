@@ -1,0 +1,14 @@
+# comments
+# Baselines only shrink: scripts/<gate> --update lowers or drops entries and refuses to add.
+addons/dot_weather/core/dot_weather_config.gd::long_block	1
+addons/dot_weather/core/dot_weather_doc.gd::banner	2
+addons/dot_weather/core/dot_weather_doc.gd::long_block	1
+addons/dot_weather/core/dot_weather_schedule.gd::long_block	3
+addons/dot_weather/dot_weather_api.gd::long_block	1
+addons/dot_weather/dot_weather_plugin.gd::long_block	1
+addons/dot_weather/runtime/dot_weather.gd::banner	1
+addons/dot_weather/runtime/dot_weather.gd::long_block	1
+addons/dot_weather/runtime/dot_weather_bolt.gd::long_block	1
+examples/weather_demo.gd::long_block	1
+examples/weather_selftest.gd::banner	12
+examples/weather_selftest.gd::long_block	1
