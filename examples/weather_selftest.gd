@@ -15,9 +15,9 @@ extends Node
 ## godot --headless --path . res://examples/weather_selftest.tscn
 ## [/codeblock]
 
-const SECTIONS := 10
+const SECTIONS := 11
 ## Checks that always run.
-const CHECKS_BASE := 114
+const CHECKS_BASE := 118
 ## Extra checks when dot-fx is installed, and when dot-lighting is.
 const CHECKS_FX := 4
 const CHECKS_LIGHTING := 2
@@ -47,6 +47,7 @@ func _run() -> void:
 	_test_flash_envelope()
 	_test_wind()
 	_test_node_events()
+	_test_gust_lean()
 	_test_fog()
 	_test_flash_on_environment()
 	_test_armed()
@@ -335,6 +336,35 @@ func _node() -> DotWeather:
 	w.config = DotWeatherConfig.new()
 	add_child(w)
 	return w
+
+
+func _test_gust_lean() -> void:
+	_section("Gusts reach the drawing as a lean on dot-fx")
+	var w := _node()
+	_check(w.gust() == Vector3.ZERO, "no document, no gust")
+	w.apply(_storm({"wind": {"vector": [3, 0, 1], "gust": 1.0, "gust_period": 5}}))
+	var peak := 0.0
+	var sum_ok := true
+	var stub := Node3D.new()
+	var src := GDScript.new()
+	src.source_code = "extends Node3D\nvar got := Vector3.ZERO\nfunc set_gust(v: Vector3) -> void:\n\tgot = v\nfunc advance(_d: float, _p: Vector3) -> void:\n\tpass\n"
+	src.reload()
+	stub.set_script(src)
+	w.add_child(stub)
+	w._fx = stub
+	var fed := true
+	for i in range(0, 400):
+		w.advance(0.1, Vector3.ZERO, i * 0.1)
+		var steady := Vector3(3, 0, 1)
+		sum_ok = sum_ok and (steady + w.gust()).is_equal_approx(Vector3(w.wind().x, 0.0, w.wind().z))
+		fed = fed and stub.got.is_equal_approx(w.gust())
+		peak = maxf(peak, w.gust().length())
+	_check(sum_ok, "steady wind plus gust is the wind the node answers")
+	_check(peak > 0.5, "a gust leans the fall (peak %.2f m/s)" % peak)
+	_check(fed, "and every frame hands it to the drawing")
+	w._fx = null
+	stub.queue_free()
+	w.queue_free()
 
 
 func _test_node_events() -> void:

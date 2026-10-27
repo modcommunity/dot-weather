@@ -43,6 +43,5 @@ The family's two steps ([game-dev/CLAUDE.md](../../CLAUDE.md#validating-anything
 
 ## Open items
 
-- No game uses it yet. Two games carry their own per-zone weather (a tick-driven draw of sky, wind, storm and fog for gameplay grip); that is prior art this does not replace: they decide *what the weather is* in a zone (simulation), this draws *a* weather. Folding them in means a game converting its zone draw into a `DotWeatherDoc` per zone; nightly item `weather-adopt`.
-- Gusts reach `wind()` only; dot-fx's precipitation takes one steady wind, so flakes do not yet lean in a gust.
-- Not registered in the family yet: `dot-bootstrap/projects.tsv`, `dot-server-deploy` `ADDONS_ALL`, `setup.ps1`, check lists.
+- Two games carry their own per-zone weather (a tick-driven draw of sky, wind, storm and fog for gameplay grip); that is prior art this does not replace: they decide *what the weather is* in a zone (simulation), this draws *a* weather. Folding them in means a game converting its zone draw into a `DotWeatherDoc` per zone; nightly item `weather-adopt`.
+- Gusts reach dot-fx as a lean: `advance` hands `gust()` (wind minus the steady wind) to `DotFxWeather.set_gust` every frame.

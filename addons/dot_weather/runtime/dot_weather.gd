@@ -186,6 +186,15 @@ func wind() -> Vector3:
 	return _wind
 
 
+## What gusts add to the document's steady wind right now (horizontal): the lean dot-fx's [code]set_gust[/code] gets.
+func gust() -> Vector3:
+	if doc == null:
+		return Vector3.ZERO
+	var steady := doc.wind_vector if doc.has_wind else Vector3.ZERO
+	var g := _wind - steady
+	return Vector3(g.x, 0.0, g.z)
+
+
 ## The flash brightness applied this frame, 0 to 1 (after the player's flash scale).
 func flash_level() -> float:
 	return _flash_level
@@ -239,6 +248,8 @@ func _sync_fx(delta: float, camera_pos: Vector3) -> void:
 	if not is_equal_approx(config.density_scale, _fx_density):
 		_fx_density = config.density_scale
 		_fx.set("density_scale", config.density_scale)
+	if _fx.has_method("set_gust"):
+		_fx.call("set_gust", gust())
 	_fx.call("advance", delta, camera_pos)
 
 
