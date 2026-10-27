@@ -58,6 +58,19 @@ A flash adds `level * flash_sky` to `background_energy_multiplier` and `level * 
 
 As with dot-fx: the game calls `advance()`. The node has no `_process`, so a server that wants only the schedule calls it at its own rate and a client calls it from its camera code.
 
+## Adopting it in a game with its own weather
+
+A game that already decides its weather per zone (rain, snow, storm, wind, as a pure function of seed, zone and tick, because grip and pay depend on it) keeps that function. It converts the result into a document per sky and applies it when the sky changes. mg-dangerous-delivery is the worked example (`DdWeather.doc_for`, `DdClient._set_weather`):
+
+1. Add one `DotWeather` node on the client, never the server (the server has no camera and nothing to draw; grip is read from the game's own function).
+2. Write `doc_for(weather) -> Dictionary`: `precipitation` from the sky (`kind` rain or snow, `density` doubled in a storm), `wind` when the wind is up, an empty dictionary for a clear sky. Fog stays the game's if it eases with its light.
+3. When the sky changes call `clear()` for an empty document and `apply(doc)` otherwise. Do not apply every frame.
+4. Call `advance(delta, camera.global_position)` once a frame from the camera code, so the drops follow the player rather than the mountain.
+5. Keep grip, damage and pay in the game: a slippery road is `weather["sky"] == RAIN` in the simulation, drops are only the picture of it. If the picture and the number disagree the player will not forgive either.
+6. Sound, spray under the wheels and wet-road looks are the game's (dot-audio, dot-vehicle's `DotVehicleSpray`); the document carries the sound ids if the game wants to read them.
+
+A second game with a zone draw does the same; if two want a transition between skies, add the `blend` field here rather than a game-side crossfade.
+
 ## Things deliberately not here
 
 - **Simulation.** No grip, no damage, no wind force on bodies. `wind()` and the signals are the interface.

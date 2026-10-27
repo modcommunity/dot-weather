@@ -43,5 +43,5 @@ The family's two steps ([game-dev/CLAUDE.md](../../CLAUDE.md#validating-anything
 
 ## Open items
 
-- Two games carry their own per-zone weather (a tick-driven draw of sky, wind, storm and fog for gameplay grip); that is prior art this does not replace: they decide *what the weather is* in a zone (simulation), this draws *a* weather. Folding them in means a game converting its zone draw into a `DotWeatherDoc` per zone; nightly item `weather-adopt`.
+- Two games carry their own per-zone weather (a tick-driven draw of sky, wind, storm and fog for gameplay grip); that is prior art this does not replace: they decide *what the weather is* in a zone (simulation), this draws *a* weather. Folding them in means a game converting its zone draw into a `DotWeatherDoc` per zone; the steps, with mg-dangerous-delivery as the worked example, are in docs/design.md ("Adopting it in a game with its own weather"); nightly item `weather-adopt` covers the remaining game.
 - Gusts reach dot-fx as a lean: `advance` hands `gust()` (wind minus the steady wind) to `DotFxWeather.set_gust` every frame.
