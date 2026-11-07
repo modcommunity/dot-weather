@@ -29,7 +29,7 @@ Paths except `examples/` are in `addons/dot_weather/`.
 
 ## Running and testing
 
-The family's two steps ([game-dev/CLAUDE.md](../../CLAUDE.md#validating-anything)), then `timeout 120 godot --headless --path . res://examples/weather_selftest.tscn`. The suite counts sections and checks, and the checks that need an optional addon are counted only when it is installed (the same suite passes in a project that has neither: link only dot-core into a scratch project and run it). The last section is the armed one: it makes deliberately wrong claims and asserts the harness caught them. The suite cannot see whether anything looks right: after changing anything that draws, render the demo under xvfb (`--mode snow|rain|fog|flash --shot file.png`) and look.
+The family's two steps ([family CLAUDE.md](../../CLAUDE.md#validating-anything)), then `timeout 120 godot --headless --path . res://examples/weather_selftest.tscn`. The suite counts sections and checks, and the checks that need an optional addon are counted only when it is installed (the same suite passes in a project that has neither: link only dot-core into a scratch project and run it). The last section is the armed one: it makes deliberately wrong claims and asserts the harness caught them. The suite cannot see whether anything looks right: after changing anything that draws, render the demo under xvfb (`--mode snow|rain|fog|flash --shot file.png`) and look.
 
 ## Rules that bite
 
